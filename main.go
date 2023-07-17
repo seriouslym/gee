@@ -48,9 +48,17 @@ func main() {
 	//})
 	//r.Run(":9991")
 	r := gee.New()
-	r.GET("/", func(context gee.Context) {
-		context.HTML(http.StatusOK, "<h1 style='color: red'>Hello Gee</h1>")
+	r.GET("/", func(c gee.Context) {
+		c.HTML(http.StatusOK, "<h1>Hello Gee</h1>")
+	})
+	r.GET("/hello", func(c gee.Context) {
+		// expect /hello?name=geektutu
+		c.String(http.StatusOK, "hello %s, you're at %s\n", c.Query("name"), c.Path)
+	})
+
+	r.GET("/hello/:name", func(c gee.Context) {
+		// expect /hello/geektutu
+		c.String(http.StatusOK, "hello %s, you're at %s\n", c.Param("name"), c.Path)
 	})
 	r.Run("localhost:9999")
-
 }
