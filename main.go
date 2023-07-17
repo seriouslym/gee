@@ -56,7 +56,7 @@ func main() {
 		c.String(http.StatusOK, "hello %s, you're at %s\n", c.Query("name"), c.Path)
 	})
 
-	r.GET("/hello/:name", func(c gee.Context) {
+	r.GET("/hello/:name/test", func(c gee.Context) {
 		// expect /hello/geektutu
 		c.String(http.StatusOK, "hello %s, you're at %s\n", c.Param("name"), c.Path)
 	})

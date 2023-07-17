@@ -52,6 +52,8 @@ func (r router) getRoute(method string, path string) (*trie, map[string]string) 
 		return nil, nil
 	}
 	node := root.search(searchParts, 0)
+	//fmt.Println("register", node.pattern)
+	//fmt.Println("search", path)
 	if node != nil {
 		parts := parsePattern(node.pattern)
 		for i, part := range parts {
@@ -72,7 +74,8 @@ func (r router) handle(c Context) {
 	node, params := r.getRoute(c.Method, c.Path)
 	if node != nil {
 		c.Params = params
-		key := c.Method + "-" + c.Path
+		// key = method + pattern not method + path
+		key := c.Method + "-" + node.pattern
 		r.handlers[key](c)
 	} else {
 		c.String(http.StatusNotFound, "404 NOT FOUND: %s\n", c.Path)

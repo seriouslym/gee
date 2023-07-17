@@ -7,7 +7,7 @@ import (
 
 func newTestRouter() *router {
 	r := newRouter()
-	r.addRouter("GET", "/hello/:name", nil)
+	r.addRouter("GET", "/hello/:name/test", nil)
 	r.addRouter("GET", "/hello/b/c", nil)
 	r.addRouter("GET", "/hi/:name", nil)
 	r.addRouter("GET", "/assets/*filepath", nil)
@@ -15,13 +15,13 @@ func newTestRouter() *router {
 }
 func TestName(t *testing.T) {
 	r := newTestRouter()
-	n, ps := r.getRoute("GET", "/hello/geektutu")
+	n, ps := r.getRoute("GET", "/hello/geektutu/test")
 
 	if n == nil {
 		t.Fatal("nil shouldn't be returned")
 	}
 
-	if n.pattern != "/hello/:name" {
+	if n.pattern != "/hello/:name/test" {
 		t.Fatal("should match /hello/:name")
 	}
 
